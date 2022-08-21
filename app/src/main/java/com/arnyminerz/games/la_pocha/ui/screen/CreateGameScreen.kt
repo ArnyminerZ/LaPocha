@@ -71,6 +71,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arnyminerz.games.la_pocha.R
+import com.arnyminerz.games.la_pocha.game.Deck
 import com.arnyminerz.games.la_pocha.game.GameInfo.Companion.cardsNumber
 import com.arnyminerz.games.la_pocha.game.GameRules
 import com.arnyminerz.games.la_pocha.game.Player
@@ -82,7 +83,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 private const val UP_AND_DOWN_DEFAULT = true
 private val PLAYERS_LIST_DEFAULT = arrayOf(Player(""), Player(""), Player(""))
-private val GAME_RULES_DEFAULT = GameRules(UP_AND_DOWN_DEFAULT)
+private val GAME_RULES_DEFAULT = GameRules(UP_AND_DOWN_DEFAULT, Deck.SPANISH)
 
 @Composable
 @ExperimentalPagerApi
