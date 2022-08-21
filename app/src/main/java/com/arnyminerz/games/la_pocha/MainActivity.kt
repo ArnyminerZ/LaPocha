@@ -1,43 +1,45 @@
 package com.arnyminerz.games.la_pocha
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.arnyminerz.games.la_pocha.ui.screen.CreateGameScreen
+import com.arnyminerz.games.la_pocha.ui.screen.IntroScreen
 import com.arnyminerz.games.la_pocha.ui.theme.LaPochaTheme
+import com.arnyminerz.games.la_pocha.viewmodel.MainViewModel
+import com.google.accompanist.pager.ExperimentalPagerApi
 
-class MainActivity : ComponentActivity() {
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+class MainActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             LaPochaTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+                val shownIntro by viewModel
+                    .shownIntro
+                    .collectAsState(initial = false)
+                val gameInfo by viewModel
+                    .gameInfo
+                    .collectAsState(initial = null)
+
+                AnimatedVisibility(visible = !shownIntro) {
+                    IntroScreen(viewModel)
+                }
+                AnimatedVisibility(visible = shownIntro && gameInfo == null) {
+                    CreateGameScreen(viewModel)
+                }
+                AnimatedVisibility(visible = gameInfo != null) {
+                    Text(text = "Game")
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    LaPochaTheme {
-        Greeting("Android")
     }
 }
