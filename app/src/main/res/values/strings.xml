@@ -9,6 +9,7 @@
     <string name="image_desc_up_and_down">Up and Down</string>
     <string name="image_desc_help">Help</string>
     <string name="image_desc_end_game">End Game</string>
+    <string name="image_desc_templates">Templates</string>
 
     <string name="intro_message">La Pocha, also known as La Podrida or Oh Hell, is a very widespread game in different Spanish-speaking countries, and this contributes to a very high number of variants. It is a game of tricks in which the important thing is not to obtain more or less tricks, but to guess in advance how many will be won.</string>
 
@@ -25,6 +26,7 @@
     <string name="new_game_cards_48"> A deck with 8s and 9s is required.</string>
     <string name="new_game_cards_remove_2s"> It\'s required that you remove a suit from the deck. Removing the 2s is a good option.</string>
     <string name="new_game_player_name">Player Name</string>
+    <string name="new_game_settings_title">Game Settings</string>
     <string name="new_game_up_and_down">Up and Down</string>
 
     <string name="game_round">Round %d/%d</string>
@@ -35,4 +37,5 @@
     <string name="dialog_end_game_message">Are you sure that you want to end the game? It has still not finished yet.</string>
     <string name="dialog_deal_cards_title">Dealing!</string>
     <string name="dialog_deal_cards_message">It\'s round %d, deal %d cards to each player.</string>
+    <string name="dialog_templates_title">Templates</string>
 </resources>
