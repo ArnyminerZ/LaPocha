@@ -69,6 +69,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arnyminerz.games.la_pocha.R
 import com.arnyminerz.games.la_pocha.game.GameInfo.Companion.cardsNumber
+import com.arnyminerz.games.la_pocha.game.GameRules
 import com.arnyminerz.games.la_pocha.game.Player
 import com.arnyminerz.games.la_pocha.ui.fonts.barlowFamily
 import com.arnyminerz.games.la_pocha.ui.fonts.robotoSlabFamily
@@ -78,6 +79,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 private const val UP_AND_DOWN_DEFAULT = true
 private val PLAYERS_LIST_DEFAULT = arrayOf(Player(""), Player(""), Player(""))
+private val GAME_RULES_DEFAULT = GameRules(UP_AND_DOWN_DEFAULT)
 
 @Composable
 @ExperimentalPagerApi
@@ -128,7 +130,7 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                         if (disabled)
                             return@ExtendedFloatingActionButton
                         viewModel
-                            .startGame(playersList, upAndDownEnabled)
+                            .startGame(playersList, gameRules)
                             .invokeOnCompletion {
                                 playersList.clear()
                                 playersList.addAll(PLAYERS_LIST_DEFAULT)
