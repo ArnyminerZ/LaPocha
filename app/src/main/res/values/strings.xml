@@ -27,8 +27,12 @@
     <string name="new_game_player_name">Player Name</string>
     <string name="new_game_up_and_down">Up and Down</string>
 
+    <string name="game_round">Round %d/%d</string>
+
     <string name="dialog_up_and_down_title">Up and Down</string>
     <string name="dialog_up_and_down_message">If disabled, the game will go up from 1 card to the highest amount of cards available. If enabled, it will also go from this maximum quantity until 1 card again.</string>
     <string name="dialog_end_game_title">End Game</string>
     <string name="dialog_end_game_message">Are you sure that you want to end the game? It has still not finished yet.</string>
+    <string name="dialog_deal_cards_title">Dealing!</string>
+    <string name="dialog_deal_cards_message">It\'s round %d, deal %d cards to each player.</string>
 </resources>
