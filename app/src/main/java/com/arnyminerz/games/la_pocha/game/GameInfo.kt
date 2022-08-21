@@ -9,14 +9,15 @@ import org.json.JSONObject
 
 data class GameInfo(
     val players: List<Player>,
-    val upAndDown: Boolean,
+    val gameRules: GameRules,
 ) : JsonSerializable {
     companion object : JsonSerializer<GameInfo> {
         override fun fromJson(json: JSONObject): GameInfo =
             GameInfo(
                 json.getJSONArray("players")
                     .map(JSON_OBJECT_GETTER) { Player.fromJson(it) },
-                json.getBoolean("up_and_down"),
+                json.getJSONObject("up_and_down")
+                    .let { GameRules.fromJson(it) },
             )
 
         /**
@@ -36,12 +37,13 @@ data class GameInfo(
 
     override fun toJson() = JSONObject().apply {
         put("players", players.toJson())
-        put("up_and_down", upAndDown)
+        put("game_rules", gameRules)
     }
 
     val numberOfPlayers: Int = players.size
 
     val numberOfCards: Int = cardsNumber(numberOfPlayers)
 
-    val numberOfRounds: Int = (numberOfCards / numberOfPlayers) * (if (upAndDown) 2 else 1)
+    val numberOfRounds: Int =
+        (numberOfCards / numberOfPlayers) * (if (gameRules.upAndDown) 2 else 1)
 }

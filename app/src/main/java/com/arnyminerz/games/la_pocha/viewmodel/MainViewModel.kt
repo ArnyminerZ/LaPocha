@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.arnyminerz.games.la_pocha.App
 import com.arnyminerz.games.la_pocha.game.GameInfo
 import com.arnyminerz.games.la_pocha.game.GameProgress
+import com.arnyminerz.games.la_pocha.game.GameRules
 import com.arnyminerz.games.la_pocha.game.Player
 import com.arnyminerz.games.la_pocha.preferences.GAME_INFO
 import com.arnyminerz.games.la_pocha.preferences.GAME_PROGRESS
@@ -46,14 +47,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             Timber.d("Marked intro as shown.")
         }
 
-    fun startGame(playersList: List<Player>, upAndDown: Boolean) =
+    fun startGame(playersList: List<Player>, gameRules: GameRules) =
         viewModelScope.launch {
             Timber.d("Storing game preferences...")
             io {
                 getApplication<App>()
                     .dataStore
                     .edit { pref ->
-                        pref[GAME_INFO] = GameInfo(playersList, upAndDown).toJson().toString()
+                        pref[GAME_INFO] = GameInfo(playersList, gameRules).toJson().toString()
                         pref[GAME_PROGRESS] = GameProgress.Default.toJson().toString()
                     }
             }
@@ -78,7 +79,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 getApplication<App>()
                     .dataStore
                     .edit {
-                        // TODO: Detect game end
                         // Get a new GameProgress adding 1 round
                         val newGameProgress = gameProgress
                             // Get GameProgress

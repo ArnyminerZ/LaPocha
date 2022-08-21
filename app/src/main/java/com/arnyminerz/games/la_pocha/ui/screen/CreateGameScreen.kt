@@ -86,7 +86,7 @@ fun CreateGameScreen(viewModel: MainViewModel) {
     val focusManager = LocalFocusManager.current
 
     val playersList = remember { mutableStateListOf(*PLAYERS_LIST_DEFAULT) }
-    var upAndDownEnabled by remember { mutableStateOf(UP_AND_DOWN_DEFAULT) }
+    var gameRules by remember { mutableStateOf(GAME_RULES_DEFAULT) }
 
     val focusRequesters = remember {
         mutableStateListOf(FocusRequester(), FocusRequester(), FocusRequester())
@@ -326,10 +326,10 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         FilterChip(
-                            selected = upAndDownEnabled,
-                            onClick = { upAndDownEnabled = !upAndDownEnabled },
+                            selected = gameRules.upAndDown,
+                            onClick = { gameRules = gameRules.copy(!gameRules.upAndDown) },
                             leadingIcon = {
-                                if (upAndDownEnabled)
+                                if (gameRules.upAndDown)
                                     Icon(
                                         Icons.Rounded.Check,
                                         stringResource(R.string.image_desc_up_and_down),
