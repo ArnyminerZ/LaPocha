@@ -79,15 +79,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     .dataStore
                     .edit {
                         // TODO: Detect game end
-                        it[GAME_PROGRESS] = gameProgress
+                        // Get a new GameProgress adding 1 round
+                        val newGameProgress = gameProgress
                             // Get GameProgress
                             .first()
                             // Increase round by 1
                             .changeRound(1)
-                            // Convert instance to JSON
-                            .toJson()
-                            // Convert JSON to String
-                            .toString()
+                        // Get the current GameInfo
+                        val gameInfo = gameInfo
+                            .first()!!
+
+                        // Check if reached last round
+                        // TODO: Notify the player, show stats...
+                        if (newGameProgress.round >= gameInfo.numberOfRounds)
+                            endGame()
+                        else
+                            it[GAME_PROGRESS] = newGameProgress
+                                // Convert instance to JSON
+                                .toJson()
+                                // Convert JSON to String
+                                .toString()
                     }
             }
         }
