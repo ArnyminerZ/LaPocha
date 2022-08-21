@@ -29,6 +29,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         .map { jsonStr -> jsonStr?.let { JSONObject(it) } }
         .map { json -> json?.let { GameInfo.fromJson(it) } }
 
+    val gameProgress = getApplication<App>()
+        .dataStore
+        .data
+        .map { it[GAME_PROGRESS] }
+        .map { jsonStr -> jsonStr?.let { JSONObject(it) } }
+        .map { json -> json?.let { GameProgress.fromJson(it) } ?: GameProgress.Default }
+
     fun markShownIntro() =
         viewModelScope.launch {
             Timber.d("Marking intro as shown...")
