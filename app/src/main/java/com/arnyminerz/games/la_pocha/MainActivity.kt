@@ -6,10 +6,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.arnyminerz.games.la_pocha.game.GameProgress
 import com.arnyminerz.games.la_pocha.ui.screen.CreateGameScreen
+import com.arnyminerz.games.la_pocha.ui.screen.GameScreen
 import com.arnyminerz.games.la_pocha.ui.screen.IntroScreen
 import com.arnyminerz.games.la_pocha.ui.theme.LaPochaTheme
 import com.arnyminerz.games.la_pocha.viewmodel.MainViewModel
@@ -29,6 +30,9 @@ class MainActivity : AppCompatActivity() {
                 val gameInfo by viewModel
                     .gameInfo
                     .collectAsState(initial = null)
+                val gameProgress by viewModel
+                    .gameProgress
+                    .collectAsState(initial = GameProgress.Default)
 
                 AnimatedVisibility(visible = !shownIntro) {
                     IntroScreen(viewModel)
@@ -37,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     CreateGameScreen(viewModel)
                 }
                 AnimatedVisibility(visible = gameInfo != null) {
-                    Text(text = "Game")
+                    gameInfo?.let { GameScreen(it, gameProgress, viewModel) }
                 }
             }
         }
