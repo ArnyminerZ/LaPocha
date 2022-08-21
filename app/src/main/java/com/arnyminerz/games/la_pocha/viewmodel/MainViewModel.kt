@@ -51,6 +51,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     .dataStore
                     .edit { pref ->
                         pref[GAME_INFO] = GameInfo(playersList, upAndDown).toJson().toString()
+                        pref[GAME_PROGRESS] = GameProgress.Default.toJson().toString()
                     }
             }
             Timber.d("Game started!")
