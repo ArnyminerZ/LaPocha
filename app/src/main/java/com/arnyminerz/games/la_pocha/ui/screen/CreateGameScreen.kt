@@ -68,13 +68,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arnyminerz.games.la_pocha.R
+import com.arnyminerz.games.la_pocha.game.GameInfo.Companion.cardsNumber
 import com.arnyminerz.games.la_pocha.game.Player
-import com.arnyminerz.games.la_pocha.game.cardsNumber
 import com.arnyminerz.games.la_pocha.ui.fonts.barlowFamily
 import com.arnyminerz.games.la_pocha.ui.fonts.robotoSlabFamily
 import com.arnyminerz.games.la_pocha.ui.theme.NoRippleTheme
 import com.arnyminerz.games.la_pocha.viewmodel.MainViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
+
+private const val UP_AND_DOWN_DEFAULT = true
+private val PLAYERS_LIST_DEFAULT = arrayOf(Player(""), Player(""), Player(""))
 
 @Composable
 @ExperimentalPagerApi
@@ -82,8 +85,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 fun CreateGameScreen(viewModel: MainViewModel) {
     val focusManager = LocalFocusManager.current
 
-    val playersList = remember { mutableStateListOf(Player(""), Player(""), Player("")) }
-    var upAndDownEnabled by remember { mutableStateOf(true) }
+    val playersList = remember { mutableStateListOf(*PLAYERS_LIST_DEFAULT) }
+    var upAndDownEnabled by remember { mutableStateOf(UP_AND_DOWN_DEFAULT) }
 
     val focusRequesters = remember {
         mutableStateListOf(FocusRequester(), FocusRequester(), FocusRequester())
@@ -124,7 +127,17 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                     onClick = {
                         if (disabled)
                             return@ExtendedFloatingActionButton
-                        viewModel.startGame(playersList, upAndDownEnabled)
+                        viewModel
+                            .startGame(playersList, upAndDownEnabled)
+                            .invokeOnCompletion {
+                                playersList.clear()
+                                playersList.addAll(PLAYERS_LIST_DEFAULT)
+
+                                focusRequesters.clear()
+                                focusRequesters.addAll(
+                                    listOf(FocusRequester(), FocusRequester(), FocusRequester())
+                                )
+                            }
                     },
                 )
             }
