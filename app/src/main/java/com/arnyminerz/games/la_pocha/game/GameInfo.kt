@@ -16,7 +16,7 @@ data class GameInfo(
             GameInfo(
                 json.getJSONArray("players")
                     .map(JSON_OBJECT_GETTER) { Player.fromJson(it) },
-                json.getJSONObject("up_and_down")
+                JSONObject(json.getString("game_rules"))
                     .let { GameRules.fromJson(it) },
             )
 
@@ -37,7 +37,7 @@ data class GameInfo(
 
     override fun toJson() = JSONObject().apply {
         put("players", players.toJson())
-        put("game_rules", gameRules)
+        put("game_rules", gameRules.toJson())
     }
 
     val numberOfPlayers: Int = players.size

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.rounded.Filter5
 import androidx.compose.material.icons.rounded.Filter6
 import androidx.compose.material.icons.rounded.Filter7
 import androidx.compose.material.icons.rounded.Filter8
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.material.icons.rounded.RemoveCircle
 import androidx.compose.material.icons.rounded.Tag
@@ -39,6 +40,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Scaffold
@@ -95,6 +98,7 @@ fun CreateGameScreen(viewModel: MainViewModel) {
     }
 
     var showingUpAndDownDialog by remember { mutableStateOf(false) }
+    var showingTemplatesDialog by remember { mutableStateOf(false) }
 
     if (showingUpAndDownDialog)
         AlertDialog(
@@ -103,6 +107,33 @@ fun CreateGameScreen(viewModel: MainViewModel) {
             text = { Text(stringResource(R.string.dialog_up_and_down_message)) },
             confirmButton = {
                 Button(onClick = { showingUpAndDownDialog = false }) {
+                    Text(stringResource(R.string.action_close))
+                }
+            },
+        )
+    if (showingTemplatesDialog)
+        AlertDialog(
+            onDismissRequest = { showingTemplatesDialog = false },
+            title = { Text(stringResource(R.string.dialog_templates_title)) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                ) {
+                    GameRules.PRESETS.forEach { preset ->
+                        ListItem(
+                            headlineText = { Text(preset.name) },
+                            modifier = Modifier
+                                .clickable {
+                                    gameRules = preset.rules
+                                    showingTemplatesDialog = false
+                                },
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showingTemplatesDialog = false }) {
                     Text(stringResource(R.string.action_close))
                 }
             },
@@ -322,6 +353,28 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.new_game_settings_title),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Medium,
+                            fontFamily = barlowFamily,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .weight(1f),
+                        )
+                        IconButton(
+                            onClick = { showingTemplatesDialog = true },
+                        ) {
+                            Icon(Icons.Rounded.List, stringResource(R.string.image_desc_templates))
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
