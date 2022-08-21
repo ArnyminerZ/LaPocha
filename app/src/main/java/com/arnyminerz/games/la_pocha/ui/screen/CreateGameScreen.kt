@@ -194,15 +194,19 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                                         .background(
                                             MaterialTheme.colorScheme.primary,
                                             RoundedCornerShape(50),
-                                        ),
+                                        )
+                                        .width(50.dp),
                                 ) {
                                     Text(
                                         text = player.tag,
                                         color = MaterialTheme.colorScheme.onPrimary,
                                         modifier = Modifier
+                                            .fillMaxWidth()
                                             .padding(horizontal = 4.dp),
                                         fontSize = 16.sp,
                                         fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Center,
+                                        letterSpacing = 2.sp,
                                     )
                                 }
                                 TextField(
