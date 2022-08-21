@@ -6,11 +6,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.arnyminerz.games.la_pocha.App
 import com.arnyminerz.games.la_pocha.game.GameInfo
+import com.arnyminerz.games.la_pocha.game.GameProgress
 import com.arnyminerz.games.la_pocha.game.Player
 import com.arnyminerz.games.la_pocha.preferences.GAME_INFO
+import com.arnyminerz.games.la_pocha.preferences.GAME_PROGRESS
 import com.arnyminerz.games.la_pocha.preferences.SHOWN_INTRO
 import com.arnyminerz.games.la_pocha.preferences.dataStore
 import com.arnyminerz.games.la_pocha.utils.io
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -66,5 +69,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     .edit { it.remove(GAME_INFO) }
             }
             Timber.d("Game finished!")
+        }
+
+    fun nextRound() =
+        viewModelScope.launch {
+            Timber.d("Going to next round...")
+            io {
+                getApplication<App>()
+                    .dataStore
+                    .edit {
+                        // TODO: Detect game end
+                        it[GAME_PROGRESS] = gameProgress
+                            // Get GameProgress
+                            .first()
+                            // Increase round by 1
+                            .changeRound(1)
+                            // Convert instance to JSON
+                            .toJson()
+                            // Convert JSON to String
+                            .toString()
+                    }
+            }
         }
 }
