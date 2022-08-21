@@ -18,10 +18,30 @@ data class GameInfo(
                     .map(JSON_OBJECT_GETTER) { Player.fromJson(it) },
                 json.getBoolean("up_and_down"),
             )
+
+        /**
+         * Obtains the amount of cards are required for a set amount of players.
+         * @author Arnau Mora
+         * @since 20220821
+         */
+        fun cardsNumber(players: Int): Int = when (players) {
+            3 -> 36
+            4 -> 40
+            5 -> 40
+            6 -> 48
+            8 -> 40
+            else -> -1
+        }
     }
 
     override fun toJson() = JSONObject().apply {
         put("players", players.toJson())
         put("up_and_down", upAndDown)
     }
+
+    val numberOfPlayers: Int = players.size
+
+    val numberOfCards: Int = cardsNumber(numberOfPlayers)
+
+    val numberOfRounds: Int = (numberOfCards / numberOfPlayers) * (if (upAndDown) 2 else 1)
 }
