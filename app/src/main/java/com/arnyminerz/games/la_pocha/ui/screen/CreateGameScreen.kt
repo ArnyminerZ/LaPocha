@@ -105,7 +105,7 @@ fun CreateGameScreen(viewModel: MainViewModel) {
         modifier = Modifier
             .fillMaxSize(),
         floatingActionButton = {
-            val disabled = playersList.any { it.name.trim().length < 3 }
+            val disabled = playersList.size == 7 || playersList.any { it.name.trim().length < 3 }
             CompositionLocalProvider(
                 LocalRippleTheme provides if (disabled) NoRippleTheme else LocalRippleTheme.current
             ) {
@@ -278,7 +278,9 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                         modifier = Modifier.padding(horizontal = 2.dp)
                     )
                     Text(
-                        stringResource(
+                        if (numberOfPlayers == 7)
+                            stringResource(R.string.new_game_cards_7)
+                        else stringResource(
                             R.string.new_game_cards,
                             numberOfPlayers,
                             cardsNumber,
