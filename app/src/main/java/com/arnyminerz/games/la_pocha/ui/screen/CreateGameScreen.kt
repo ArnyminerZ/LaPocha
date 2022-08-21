@@ -81,6 +81,8 @@ fun CreateGameScreen(viewModel: MainViewModel) {
     val focusManager = LocalFocusManager.current
 
     val playersList = remember { mutableStateListOf(Player(""), Player(""), Player("")) }
+    var upAndDownEnabled by remember { mutableStateOf(true) }
+
     val focusRequesters = remember {
         mutableStateListOf(FocusRequester(), FocusRequester(), FocusRequester())
     }
@@ -120,7 +122,7 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                     onClick = {
                         if (disabled)
                             return@ExtendedFloatingActionButton
-                        viewModel.startGame(playersList)
+                        viewModel.startGame(playersList, upAndDownEnabled)
                     },
                 )
             }
@@ -143,7 +145,6 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                 ) {
                     val numberOfPlayers = playersList.size
                     val cardsNumber = cardsNumber(numberOfPlayers)
-                    var upAndDownEnabled by remember { mutableStateOf(true) }
 
                     Text(
                         text = stringResource(R.string.new_game_title),

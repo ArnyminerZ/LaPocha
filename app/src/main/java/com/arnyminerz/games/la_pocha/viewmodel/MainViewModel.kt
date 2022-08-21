@@ -7,12 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.arnyminerz.games.la_pocha.App
 import com.arnyminerz.games.la_pocha.game.GameInfo
 import com.arnyminerz.games.la_pocha.game.Player
-import com.arnyminerz.games.la_pocha.preferences.GAME_INFO_PLAYERS
+import com.arnyminerz.games.la_pocha.preferences.GAME_INFO
 import com.arnyminerz.games.la_pocha.preferences.SHOWN_INTRO
 import com.arnyminerz.games.la_pocha.preferences.dataStore
 import com.arnyminerz.games.la_pocha.utils.io
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import timber.log.Timber
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,8 +25,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var gameInfo = getApplication<App>()
         .dataStore
         .data
-        .map { it[GAME_INFO_PLAYERS] }
-        .map { set -> (set?.map { Player(it) })?.let { GameInfo(it) } }
+        .map { it[GAME_INFO] }
+        .map { jsonStr -> jsonStr?.let { JSONObject(it) } }
+        .map { json -> json?.let { GameInfo.fromJson(it) } }
 
     fun markShownIntro() =
         viewModelScope.launch {
@@ -34,13 +36,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             Timber.d("Marked intro as shown.")
         }
 
-    fun startGame(playersList: List<Player>) =
+    fun startGame(playersList: List<Player>, upAndDown: Boolean) =
         viewModelScope.launch {
             Timber.d("Storing game preferences...")
             io {
                 getApplication<App>()
                     .dataStore
-                    .edit { pref -> pref[GAME_INFO_PLAYERS] = playersList.map { it.name }.toSet() }
+                    .edit { pref ->
+                        pref[GAME_INFO] = GameInfo(playersList, upAndDown).toJson().toString()
+                    }
             }
             Timber.d("Game started!")
         }
