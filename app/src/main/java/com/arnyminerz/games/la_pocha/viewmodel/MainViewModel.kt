@@ -48,4 +48,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
             Timber.d("Game started!")
         }
+
+    fun endGame() =
+        viewModelScope.launch {
+            Timber.d("Forcing game ending...")
+            io {
+                getApplication<App>()
+                    .dataStore
+                    .edit { it.remove(GAME_INFO) }
+            }
+            Timber.d("Game finished!")
+        }
 }
