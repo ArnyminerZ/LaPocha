@@ -174,6 +174,7 @@ fun CreateGameScreen(viewModel: MainViewModel) {
                                 focusRequesters.add(FocusRequester())
                                 playersList.add(Player(""))
                             },
+                            enabled = numberOfPlayers < 8,
                         ) {
                             Icon(
                                 Icons.Rounded.Add,
