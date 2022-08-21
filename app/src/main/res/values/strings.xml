@@ -8,16 +8,20 @@
     <string name="image_desc_players_remove">Remove Player</string>
     <string name="image_desc_up_and_down">Up and Down</string>
     <string name="image_desc_help">Help</string>
+    <string name="image_desc_end_game">End Game</string>
 
     <string name="intro_message">La Pocha, also known as La Podrida or Oh Hell, is a very widespread game in different Spanish-speaking countries, and this contributes to a very high number of variants. It is a game of tricks in which the important thing is not to obtain more or less tricks, but to guess in advance how many will be won.</string>
 
     <string name="action_start">Start</string>
     <string name="action_close">Close</string>
+    <string name="action_end">End</string>
+    <string name="action_cancel">Cancel</string>
 
     <string name="new_game_title">New Game</string>
     <string name="new_game_players_list">Players List</string>
     <string name="new_game_players_number">%d Players</string>
     <string name="new_game_cards">For %d players a deck of %d cards is required. Each player will get at most %d cards.</string>
+    <string name="new_game_cards_7">It\'s not possible to play 7 people. Please, add or remove one person.</string>
     <string name="new_game_cards_48"> A deck with 8s and 9s is required.</string>
     <string name="new_game_cards_remove_2s"> It\'s required that you remove a suit from the deck. Removing the 2s is a good option.</string>
     <string name="new_game_player_name">Player Name</string>
@@ -25,4 +29,6 @@
 
     <string name="dialog_up_and_down_title">Up and Down</string>
     <string name="dialog_up_and_down_message">If disabled, the game will go up from 1 card to the highest amount of cards available. If enabled, it will also go from this maximum quantity until 1 card again.</string>
+    <string name="dialog_end_game_title">End Game</string>
+    <string name="dialog_end_game_message">Are you sure that you want to end the game? It has still not finished yet.</string>
 </resources>
