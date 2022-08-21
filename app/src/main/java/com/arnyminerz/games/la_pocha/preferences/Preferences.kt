@@ -13,3 +13,5 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Bui
 val SHOWN_INTRO = booleanPreferencesKey(PREFERENCES_KEY_SHOWN_INTRO)
 
 val GAME_INFO = stringPreferencesKey(PREFERENCES_KEY_GAME_INFO)
+
+val GAME_PROGRESS = stringPreferencesKey(PREFERENCES_KEY_GAME_PROGRESS)
